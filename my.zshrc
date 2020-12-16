@@ -27,31 +27,14 @@ elif [[ "$unamestr" == "CYGWIN_NT-10.0" ]]; then
 fi
 echo "platform is [$platform]"
 
-if [ -x /usr/bin/dircolors ]; then
-	# Linux
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-else
-	# macOS
-	alias ls='ls -G'
-	alias ggrep='ggrep --color=auto'
-    alias gfgrep='gfgrep --color=auto'
-    alias gegrep='gegrep --color=auto'
-fi
-
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias cp="cp -i"                          # confirm before overwriting something
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
-alias more=less
-
 function ep {
-	export http_proxy=http://127.0.0.1:1087;
-	export https_proxy=http://127.0.0.1:1087;
+	if [[ $platform == 'linux' ]]; then
+		export http_proxy=http://127.0.0.1:65080;
+		export https_proxy=http://127.0.0.1:65080;
+	elif [[ $platform == 'macos' ]]; then
+		export http_proxy=http://127.0.0.1:1087;
+		export https_proxy=http://127.0.0.1:1087;
+	fi
 	echo "Enable Proxy: $http_proxy"
 }
 function dp {
@@ -157,7 +140,6 @@ export GOROOT="${HOME}/go/gosrc"
 export GOPATH="${HOME}/go"
 export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
 
-export PATH=/opt/homebrew/bin:$PATH
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH
 
 
