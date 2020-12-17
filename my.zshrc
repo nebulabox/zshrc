@@ -90,6 +90,10 @@ function tarxz {
   tar pcvfJ $1 --exclude="$1" --exclude=".DS_Store" --exclude="._*" --exclude="thumbs.db" $*
 }
 
+function push_zshrc {
+	
+}
+
 build_env_reset() {
 	unset CFLAGS
 	unset CXXFLAGS
@@ -110,7 +114,7 @@ build_env_reset() {
 
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh]; then
+elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
