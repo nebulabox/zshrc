@@ -84,6 +84,7 @@ zshrc_sync() {
 	git push origin
 	popd
 }
+zshrc_sync &
 
 # usage: tarex <file>
 function tarex {
