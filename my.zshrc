@@ -84,6 +84,18 @@ push_zshrc() {
 	git push origin
 	popd
 }
+pull_zshrc() {
+	MYRC=$(ls -al ~/my.zshrc)
+	AA=(${(s/:/)MYRC})
+	BB=$AA[-1]
+	CC=(${(s: -> :)BB})
+	DD=$CC[-1]
+	print -l $DD
+	EE=${DD:h}
+	pushd $EE
+	git pull origin
+	popd
+}
 
 # usage: tarex <file>
 function tarex {
