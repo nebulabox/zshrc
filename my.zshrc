@@ -70,7 +70,19 @@ calcimpl() {
 }
 alias calc="noglob calcimpl"
 
-zshrc_sync() {
+zshrc_pull() {
+	MYRC=$(ls -al ~/my.zshrc)
+	AA=(${(s/:/)MYRC})
+	BB=$AA[-1]
+	CC=(${(s: -> :)BB})
+	DD=$CC[-1]
+	EE=${DD:h}
+	pushd $EE
+	git pull origin
+	popd
+}
+
+zshrc_push() {
 	MYRC=$(ls -al ~/my.zshrc)
 	AA=(${(s/:/)MYRC})
 	BB=$AA[-1]
@@ -84,7 +96,6 @@ zshrc_sync() {
 	git push origin
 	popd
 }
-zshrc_sync > /dev/null 2&>1 &
 
 # usage: tarex <file>
 function tarex {
