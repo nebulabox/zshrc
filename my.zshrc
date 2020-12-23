@@ -3,6 +3,9 @@ echo "Running my.zshrc"
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+setopt EXTENDED_GLOB
+autoload -U zmv
+
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
@@ -61,6 +64,27 @@ cdr2mask ()
    echo ${1-0}.${2-0}.${3-0}.${4-0}
 }
 
+calcimpl() {
+	zmodload zsh/mathfunc
+	echo $(($1))
+}
+alias calc="noglob calcimpl"
+
+push_zshrc() {
+	MYRC=$(ls -al ~/my.zshrc)
+	AA=(${(s/:/)MYRC})
+	BB=$AA[-1]
+	CC=(${(s: -> :)BB})
+	DD=$CC[-1]
+	print -l $DD
+	EE=${DD:h}
+	pushd $EE
+	git add .
+	git commit -m "no msg"
+	git push origin
+	popd
+}
+
 # usage: tarex <file>
 function tarex {
 	set -x;
@@ -90,10 +114,6 @@ function tarxz {
   tar pcvfJ $1 --exclude="$1" --exclude=".DS_Store" --exclude="._*" --exclude="thumbs.db" $*
 }
 
-function push_zshrc {
-	
-}
-
 build_env_reset() {
 	unset CFLAGS
 	unset CXXFLAGS
@@ -109,7 +129,7 @@ build_env_reset() {
 	unset RANLIB
 	unset OBJDUMP
 	unset READELF
-	#export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/unzip/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/bzip2/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/ncurses/bin:/usr/local/opt/gnu-which/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/gettext/bin:/usr/local/opt/gnu-getopt/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin" 
+	# export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/unzip/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/bzip2/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/ncurses/bin:/usr/local/opt/gnu-which/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/gettext/bin:/usr/local/opt/gnu-getopt/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin" 
 }
 
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -130,7 +150,6 @@ elif [[ $platform == 'macos' ]]; then
   export PATH="/usr/local/opt/openssl/bin:$PATH"
 fi
 
-
 alias sccd='cd /etc/systemd/system && ls'
 alias sc='sudo systemctl daemon-reload && sudo systemctl'
 alias df='df -h'    # human-readable sizes
@@ -140,8 +159,9 @@ alias x='arch -x86_64'
 alias qoccg="c++ -std=gnu++17 -fPIC -frtti -fexceptions -g -DDEBUG=1"
 alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
+alias pl="print -l"
 
-export HOMEBREW_GITHUB_API_TOKEN='8b476115c622bd5496349dc65a75944083ef919b'
+export HOMEBREW_GITHUB_API_TOKEN='2b4e274191298f9e000c035ad4bf7086f6b97984'
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
 export GOROOT="${HOME}/go/gosrc"
