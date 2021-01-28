@@ -173,13 +173,13 @@ alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
 alias pl="print -l"
 
-export HOMEBREW_GITHUB_API_TOKEN='2b4e274191298f9e000c035ad4bf7086f6b97984'
+export HOMEBREW_GITHUB_API_TOKEN='2dba04edcb372e2465448860a83b3636558bea8f'
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
 export GOROOT="${HOME}/go/gosrc"
 export GOPATH="${HOME}/go"
 export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
 
-export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH
+export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
 
