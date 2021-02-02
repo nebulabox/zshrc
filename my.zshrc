@@ -175,7 +175,7 @@ alias pl="print -l"
 
 hostname=$(hostname)
 if [[ $hostname == 'kmac.local' ]]; then
- export HOMEBREW_GITHUB_API_TOKEN='e3a35ce5a4557f13a887ad6bd5b4d1248ba98bf1'
+ export HOMEBREW_GITHUB_API_TOKEN='2822c16bb3abbddd1447401590bfd5612d84ff9f'
 elif [[ $hostname == 'MacMini.local' ]]; then
  unset HOMEBREW_GITHUB_API_TOKEN
 fi
