@@ -173,7 +173,7 @@ alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
 alias pl="print -l"
 
-export HOMEBREW_GITHUB_API_TOKEN='4ebf9c5d07652a66f9da59597bf1fb7396af8dfc'
+export HOMEBREW_GITHUB_API_TOKEN='a7a497d8a9fef346d308923bd0c6234d2e5f2d40'
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
 export GOROOT="${HOME}/go/gosrc"
