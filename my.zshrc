@@ -175,9 +175,9 @@ alias pl="print -l"
 
 hostname=$(hostname)
 if [[ $hostname == 'kmac.local' ]]; then
- export HOMEBREW_GITHUB_API_TOKEN='88f21aac97e11f5fcb05aa52188aca332615c092'
+ export HOMEBREW_GITHUB_API_TOKEN='e3a35ce5a4557f13a887ad6bd5b4d1248ba98bf1'
 elif [[ $hostname == 'MacMini.local' ]]; then
- export HOMEBREW_GITHUB_API_TOKEN='8417d05a53f038767f3964f28e19a58ace8ae40b'
+ unset HOMEBREW_GITHUB_API_TOKEN
 fi
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
