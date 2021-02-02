@@ -173,7 +173,12 @@ alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
 alias pl="print -l"
 
-export HOMEBREW_GITHUB_API_TOKEN='a7a497d8a9fef346d308923bd0c6234d2e5f2d40'
+hostname=$(hostname)
+if [[ $hostname == 'kmac.local' ]]; then
+ export HOMEBREW_GITHUB_API_TOKEN='88f21aac97e11f5fcb05aa52188aca332615c092'
+elif [[ $hostname == 'MacMini.local' ]]; then
+ export HOMEBREW_GITHUB_API_TOKEN='8417d05a53f038767f3964f28e19a58ace8ae40b'
+fi
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
 export GOROOT="${HOME}/go/gosrc"
