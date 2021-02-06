@@ -68,7 +68,7 @@ calcimpl() {
 	zmodload zsh/mathfunc
 	echo $(($1))
 }
-alias calc="noglob calcimpl"
+alias c="noglob calcimpl"
 
 zshrc_pull() {
 	MYRC=$(ls -al ~/my.zshrc)
