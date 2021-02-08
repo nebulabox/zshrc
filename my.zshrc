@@ -180,6 +180,6 @@ export GOROOT="${HOME}/go/gosrc"
 export GOPATH="${HOME}/go"
 export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
 
-export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:/opt/homebrew/bin:$PATH:/sbin
+export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
 
