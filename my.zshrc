@@ -178,11 +178,11 @@ alias tdx="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/t
 unset HOMEBREW_GITHUB_API_TOKEN
 
 ffcvt_small() {
-	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 28 -acodec aac -b:a 128k -tag:v hvc1 -movflags +faststart output.mp4
+	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 28 -acodec aac -b:a 128k -tag:v hvc1 -movflags +faststart $1.small.mp4
 }
 
 ffcvt_best() {
-	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart output.mp4
+	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart $1.best.mp4
 }
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
