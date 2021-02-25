@@ -172,7 +172,9 @@ alias qoccg="c++ -std=gnu++17 -fPIC -frtti -fexceptions -g -DDEBUG=1"
 alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
 alias pl="print -l"
-
+alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
+alias xiadan="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe"
+alias tdx="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe"
 unset HOMEBREW_GITHUB_API_TOKEN
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
