@@ -177,8 +177,8 @@ alias pl="print -l"
 
 
 alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
-alias xiadan="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
-alias tdx="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
+alias xiadan="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
+alias tdx="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
 alias killwine="/usr/bin/killall wine32on64-preloader"
 
 ffcvt_small() {
