@@ -162,6 +162,8 @@ elif [[ $platform == 'macos' ]]; then
   export PATH="/usr/local/opt/openssl/bin:$PATH"
 fi
 
+unset HOMEBREW_GITHUB_API_TOKEN
+
 alias sccd='cd /etc/systemd/system && ls'
 alias sc='sudo systemctl daemon-reload && sudo systemctl'
 alias df='df -h'    # human-readable sizes
@@ -172,10 +174,12 @@ alias qoccg="c++ -std=gnu++17 -fPIC -frtti -fexceptions -g -DDEBUG=1"
 alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
 alias pl="print -l"
+
+
 alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
-alias xiadan="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe"
-alias tdx="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe"
-unset HOMEBREW_GITHUB_API_TOKEN
+alias xiadan="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
+alias tdx="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
+alias kill_wine="/usr/bin/killall wine32on64-preloader"
 
 ffcvt_small() {
 	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 28 -acodec aac -b:a 128k -tag:v hvc1 -movflags +faststart $1.small.mp4
