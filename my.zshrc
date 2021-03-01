@@ -179,7 +179,7 @@ alias pl="print -l"
 alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
 alias xiadan="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
 alias tdx="LC_ALL=zh_CN.GBK /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
-alias kill_wine="/usr/bin/killall wine32on64-preloader"
+alias killwine="/usr/bin/killall wine32on64-preloader"
 
 ffcvt_small() {
 	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 28 -acodec aac -b:a 128k -tag:v hvc1 -movflags +faststart $1.small.mp4
