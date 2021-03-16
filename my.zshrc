@@ -156,6 +156,7 @@ elif [[ $platform == 'macos' ]]; then
   export GOROOT_BOOTSTRAP=$HOME/go/bootstrap
   export GOROOT=$HOME/go/go
   export GOPATH=$HOME/go
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
   export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
   export PATH="/Users/nebulabox/Documents/Scripts:$PATH"
   export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
@@ -170,11 +171,8 @@ alias df='df -h'    # human-readable sizes
 alias du='du -h'
 alias aria2='aria2c -s16 -k1M -x16 -j16'
 alias x='arch -x86_64'
-alias qoccg="c++ -std=gnu++17 -fPIC -frtti -fexceptions -g -DDEBUG=1"
-alias qocc="c++ -std=gnu++17 -fPIC -frtti -fexceptions -Ofast"
 alias brewx="arch -x86_64 /usr/local/bin/brew"
 alias pl="print -l"
-
 
 alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
 alias xiadan="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
@@ -196,4 +194,13 @@ export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
 
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
+kc() {
+	# alias k_debug="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1"
+    # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
+	export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+    export CPPFLAGS="-I/usr/local/opt/llvm/include"
+	/usr/local/opt/llvm/bin/clang++ -std=gnu++20 -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1 $*
+	unset LDFLAGS
+	unset CPPFLAGS
+}
 
