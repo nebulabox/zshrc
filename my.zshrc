@@ -194,11 +194,13 @@ export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
 
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
+# more system environment vars set in ~/Library/LaunchAgents/environment.plist
+
 kc() {
 	# alias k_debug="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1"
-    # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
+        # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
 	export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
-    export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export CPPFLAGS="-I/usr/local/opt/llvm/include"
 	/usr/local/opt/llvm/bin/clang++ -std=gnu++20 -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1 $*
 	unset LDFLAGS
 	unset CPPFLAGS
