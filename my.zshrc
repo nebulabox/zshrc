@@ -179,12 +179,20 @@ alias xiadan="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulab
 alias tdx="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
 alias killwine="/usr/bin/killall wine32on64-preloader"
 
-ffcvt_small() {
-	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 28 -acodec aac -b:a 128k -tag:v hvc1 -movflags +faststart $1.small.mp4
+ff_cvt_smallest() {
+	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 33 -acodec aac -b:a 64k -tag:v hvc1 -movflags +faststart ${1:r}.smallest.mp4
 }
 
-ffcvt_best() {
-	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart $1.best.mp4
+ff_cvt_small() {
+	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 28 -acodec aac -b:a 96k -tag:v hvc1 -movflags +faststart ${1:r}.small.mp4
+}
+
+ff_cvt_middle() {
+	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 25 -acodec aac -b:a 128k -tag:v hvc1 -movflags +faststart ${1:r}.middle.mp4
+}
+
+ff_cvt_best() {
+	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart ${1:r}.best.mp4
 }
 
 export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
