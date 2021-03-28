@@ -195,10 +195,10 @@ ff_cvt_best() {
 	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart ${1:r}.best.mp4
 }
 
-export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
-export GOROOT="${HOME}/go/gosrc"
-export GOPATH="${HOME}/go"
-export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
+# export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
+# export GOROOT="${HOME}/go/gosrc"
+# export GOPATH="${HOME}/go"
+# export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
 
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
