@@ -1,7 +1,7 @@
 echo "Running my.zshrc"
 
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+# [[ $- != *i* ]] && return
 
 setopt EXTENDED_GLOB
 autoload -U zmv
@@ -14,8 +14,6 @@ fi
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
-complete -cf sudo
 
 platform='unknown'
 unamestr=`uname`
@@ -99,7 +97,7 @@ zshrc_push() {
 
 # usage: tarex <file>
 function tarex {
-	set -x;
+    set -x;
 	if [ -f $1 ] ; then
 		case $1 in
 		*.tar.bz2)   tar xjf $1   ;;
@@ -150,28 +148,21 @@ elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
+if [[ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] {
+	source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+}
+
 if [[ $platform == 'linux' ]]; then
    export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
+   alias sccd='cd /etc/systemd/system && ls'
+   alias sc='sudo systemctl daemon-reload && sudo systemctl'
 elif [[ $platform == 'macos' ]]; then
-  export GOROOT_BOOTSTRAP=$HOME/go/bootstrap
-  export GOROOT=$HOME/go/go
-  export GOPATH=$HOME/go
   export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-  export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
-  export PATH="/Users/nebulabox/Documents/Scripts:$PATH"
-  export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
-  export PATH="/usr/local/opt/openssl/bin:$PATH"
 fi
 
-unset HOMEBREW_GITHUB_API_TOKEN
-
-alias sccd='cd /etc/systemd/system && ls'
-alias sc='sudo systemctl daemon-reload && sudo systemctl'
 alias df='df -h'    # human-readable sizes
 alias du='du -h'
-alias aria2='aria2c -s16 -k1M -x16 -j16'
-alias x='arch -x86_64'
-alias brewx="arch -x86_64 /usr/local/bin/brew"
+alias x86='arch -x86_64'
 alias pl="print -l"
 
 alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
@@ -195,20 +186,51 @@ ff_cvt_best() {
 	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart ${1:r}.best.mp4
 }
 
-# export GOROOT_BOOTSTRAP="${HOME}/go/go-bootstrap"
-# export GOROOT="${HOME}/go/gosrc"
-# export GOPATH="${HOME}/go"
-# export PATH=${GOPATH}/bin:${GOROOT}/bin:$PATH
+pdf_compress ()
+{
+	if {which pdfsizeopt} {
+		pdfsizeopt $1 ${1%.*}.compressed.pdf
+	} elif {which gs} {
+		gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dEmbedAllFonts=true -dSubsetFonts=true -sOutputFile=${1%.*}.compressed.pdf $1
+	} else {
+		echo "Need 'pdfsizeopt' or 'ghostscript' "
+	}
+}
+
+dec2bin() {
+	local -i 2 i=$1
+	echo $i
+}
+dec2hex() {
+	local -i 16 i=$1
+	echo $i
+}
+hex2dec() {
+	echo $((16#$1))
+}
+bin2dec() {
+	echo $((2#$1))
+}
+hex2bin() {
+	local -i 2 i=$(( $((16#$1)) ))
+	echo $i
+}
+bin2hex() {
+	local -i 16 i=$(( $((2#$1)) ))
+	echo $i
+}
+
+alias aria2='aria2c -s16 -k1M -x16 -j16'
 
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
 # more system environment vars set in ~/Library/LaunchAgents/environment.plist
 
-kc() {
+kcc() {
 	# alias k_debug="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1"
-        # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
+    # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
 	export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
-        export CPPFLAGS="-I/usr/local/opt/llvm/include"
+    export CPPFLAGS="-I/usr/local/opt/llvm/include"
 	/usr/local/opt/llvm/bin/clang++ -std=gnu++20 -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1 $*
 	unset LDFLAGS
 	unset CPPFLAGS
