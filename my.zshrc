@@ -4,6 +4,8 @@ echo "Running my.zshrc"
 # [[ $- != *i* ]] && return
 
 setopt EXTENDED_GLOB
+
+# 修改名字 zmv '(*).pdf' '$1.txt'
 autoload -U zmv
 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -152,6 +154,8 @@ if [[ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]
 	source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 }
 
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
 if [[ $platform == 'linux' ]]; then
    export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
    alias sccd='cd /etc/systemd/system && ls'
@@ -184,6 +188,10 @@ ff_cvt_middle() {
 
 ff_cvt_best() {
 	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 22 -acodec aac -b:a 192k -tag:v hvc1 -movflags +faststart ${1:r}.best.mp4
+}
+
+ff_extract_audio_to_m4a() {
+	ffmpeg -i $1 -dn -vn -sn -acodec 'aac' ${1%.*}.m4a
 }
 
 pdf_compress ()
