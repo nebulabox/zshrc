@@ -229,6 +229,8 @@ bin2hex() {
 }
 
 alias aria2='aria2c -s16 -k1M -x16 -j16'
+alias youtube-dl-audio="youtube-dl -f 'bestaudio[ext=m4a]' "
+alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
 
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
