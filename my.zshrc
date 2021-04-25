@@ -1,8 +1,8 @@
-echo "Running my.zshrc"
-
+source ~/zsh-repos/zsh-snap/znap.zsh
 # If not running interactively, don't do anything
 # [[ $- != *i* ]] && return
 
+echo "Running my.zshrc"
 # prompt, use prompt -l for more themes
 autoload -Uz promptinit
 promptinit
@@ -101,6 +101,17 @@ calcimpl() {
 	echo $(($1))
 }
 alias c="noglob calcimpl"
+
+# znap plugins
+if { which znap > /dev/null } {
+	echo "Enable zsh-autocomplete. [CTRL+R] show history "
+	znap source marlonrichert/zsh-autocomplete
+} else {
+	echo "[Warning] Not found znap. Can be installed by"
+	echo " mkdir zsh-repos
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git
+source zsh-snap/install.zsh "
+}
 
 zshrc_pull() {
 	MYRC=$(ls -al ~/my.zshrc)
@@ -285,4 +296,3 @@ kcc() {
 	unset LDFLAGS
 	unset CPPFLAGS
 }
-
