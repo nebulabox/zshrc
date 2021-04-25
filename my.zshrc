@@ -114,27 +114,13 @@ source zsh-snap/install.zsh "
 }
 
 zshrc_pull() {
-	MYRC=$(ls -al ~/my.zshrc)
-	AA=(${(s/:/)MYRC})
-	BB=$AA[-1]
-	CC=(${(s: -> :)BB})
-	DD=$CC[-1]
-	EE=${DD:h}
-	EE="/${EE#*/}"
-	pushd ${EE}
+	pushd ~/zshrc
 	git pull origin
 	popd
 }
 
 zshrc_push() {
-	MYRC=$(ls -al ~/my.zshrc)
-	AA=(${(s/:/)MYRC})
-	BB=$AA[-1]
-	CC=(${(s: -> :)BB})
-	DD=$CC[-1]
-	EE=${DD:h}
-	EE="/${EE#*/}"
-	pushd $EE
+	pushd ~/zshrc 
 	git add .
 	git commit -m "no msg"
 	git pull origin
