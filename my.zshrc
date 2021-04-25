@@ -3,7 +3,39 @@ echo "Running my.zshrc"
 # If not running interactively, don't do anything
 # [[ $- != *i* ]] && return
 
-setopt EXTENDED_GLOB
+# prompt, use prompt -l for more themes
+autoload -Uz promptinit
+promptinit
+prompt bart
+
+setopt extendedglob         # Extended globbing. Allows using regular expressions with *
+setopt nocaseglob           # Case insensitive globbing
+setopt rcexpandparam        # Array expansion with parameters
+setopt numericglobsort      # Sort filenames numerically when it makes sense
+setopt nobeep               # No beep
+setopt appendhistory        # Immediately append history instead of overwriting
+setopt histignorealldups    # If a new command is a duplicate, remove the older one
+setopt sharehistory         # Import new comands and appends typed commands to history
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# Theming section
+autoload -U compinit colors zcalc
+compinit -d
+colors
+
+# Figure out the SHORT hostname
+if [[ "$OSTYPE" = darwin* ]]; then
+  # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
+  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}
+else
+  SHORT_HOST=${HOST/.*/}
+fi
+
+zstyle ':completion:*' rehash true                              # automatically find new executables in path 
 
 # 修改名字 zmv '(*).pdf' '$1.txt'
 autoload -U zmv
@@ -154,20 +186,16 @@ elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
-if [[ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] {
-	source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-}
-
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
 if [[ $platform == 'linux' ]]; then
-   export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
    alias sccd='cd /etc/systemd/system && ls'
    alias sc='sudo systemctl daemon-reload && sudo systemctl'
+   alias ls='ls --color'
+   alias ll='ls --color -al'
 elif [[ $platform == 'macos' ]]; then
   export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+  alias ls='/bin/ls -G'
+  alias ll='/bin/ls -al -G'
 fi
-
 alias df='df -h'    # human-readable sizes
 alias du='du -h'
 alias x86='arch -x86_64'
