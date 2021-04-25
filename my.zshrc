@@ -108,9 +108,9 @@ if { which znap > /dev/null } {
 	znap source marlonrichert/zsh-autocomplete
 } else {
 	echo "[Warning] Not found znap. Can be installed by"
-	echo "  mkdir zsh-repos
-  git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git
-  source zsh-snap/install.zsh "
+	echo "mkdir zsh-repos; cd zsh-repos; 
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git
+source zsh-snap/install.zsh "
 }
 
 zshrc_pull() {
