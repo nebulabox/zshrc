@@ -109,7 +109,8 @@ zshrc_pull() {
 	CC=(${(s: -> :)BB})
 	DD=$CC[-1]
 	EE=${DD:h}
-	pushd $EE
+	EE="/${EE#*/}"
+	pushd ${EE}
 	git pull origin
 	popd
 }
@@ -121,6 +122,7 @@ zshrc_push() {
 	CC=(${(s: -> :)BB})
 	DD=$CC[-1]
 	EE=${DD:h}
+	EE="/${EE#*/}"
 	pushd $EE
 	git add .
 	git commit -m "no msg"
