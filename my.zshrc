@@ -6,7 +6,7 @@ echo "Running my.zshrc"
 # prompt, use prompt -l for more themes
 autoload -Uz promptinit
 promptinit
-prompt bart
+prompt clint
 
 setopt extendedglob         # Extended globbing. Allows using regular expressions with *
 setopt nocaseglob           # Case insensitive globbing
