@@ -198,6 +198,11 @@ elif [[ $platform == 'macos' ]]; then
   alias ls='/bin/ls -G'
   alias ll='/bin/ls -al -G'
 fi
+
+if { which vim > /dev/null } {
+	alias vi='vim'
+}
+
 alias df='df -h'    # human-readable sizes
 alias du='du -h'
 alias x86='arch -x86_64'
