@@ -126,6 +126,10 @@ function tarxz {
   tar pcvfJ $1 --exclude="$1" --exclude=".DS_Store" --exclude="._*" --exclude="thumbs.db" $*
 }
 
+function tarit {
+  tar pcvf $1 --exclude="$1" --exclude=".DS_Store" --exclude="._*" --exclude="thumbs.db" $*
+}
+
 build_env_reset() {
 	unset CFLAGS
 	unset CXXFLAGS
@@ -231,6 +235,7 @@ bin2hex() {
 alias aria2='aria2c -s16 -k1M -x16 -j16'
 alias youtube-dl-audio="youtube-dl -f 'bestaudio[ext=m4a]' "
 alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
+alias youtube-dl-listformats="youtube-dl -F "
 
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 
