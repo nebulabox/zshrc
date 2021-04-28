@@ -1,4 +1,3 @@
-source ~/zsh-repos/zsh-snap/znap.zsh
 # If not running interactively, don't do anything
 # [[ $- != *i* ]] && return
 
@@ -102,17 +101,6 @@ calcimpl() {
 }
 alias c="noglob calcimpl"
 
-# znap plugins
-if { which znap > /dev/null } {
-	echo "Enable zsh-autocomplete. [CTRL+R] show history "
-	znap source marlonrichert/zsh-autocomplete
-} else {
-	echo "[Warning] Not found znap. Can be installed by"
-	echo "mkdir zsh-repos; cd zsh-repos; 
-git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git
-source zsh-snap/install.zsh "
-}
-
 zshrc_pull() {
 	pushd ~/zshrc
 	git pull origin
@@ -162,21 +150,47 @@ function tarit {
 }
 
 build_env_reset() {
-	unset CFLAGS
-	unset CXXFLAGS
-	unset CPPFLAGS
-	unset LDFLAGS
-	unset CC
-	unset CXX
-	unset LD
-	unset AR
-	unset AS
-	unset NM
-	unset STRIP
-	unset RANLIB
-	unset OBJDUMP
-	unset READELF
-	# export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/unzip/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/bzip2/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/ncurses/bin:/usr/local/opt/gnu-which/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/gettext/bin:/usr/local/opt/gnu-getopt/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin" 
+    unset CFLAGS; unset CXXFLAGS; unset CPPFLAGS; unset LDFLAGS; unset CC; unset CXX; unset LD; unset AR; unset AS; unset NM; unset STRIP; unset RANLIB; unset OBJDUMP; unset READELF
+	export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/unzip/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/bzip2/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/ncurses/bin:/usr/local/opt/gnu-which/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/gettext/bin:/usr/local/opt/gnu-getopt/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin" 
+}
+
+cross_compile_ac86u() {
+	export TOOLCHAIN="/Volumes/USSD/aarch64-ac86u-linux-gnu"
+	export STAGE="/Volumes/USSD/ac86u/stage"
+	export ROOTFS="/Volumes/USSD/ac86u/rootfs"
+	export HOST="aarch64-ac86u-linux-gnu"
+	export GCC_VER="10.3.0"
+	export PATH="${TOOLCHAIN}/bin:${PATH}"
+	export CC=${HOST}-gcc
+	export CXX=${HOST}-g++
+	export LD=${HOST}-ld
+	export AR=${HOST}-ar
+	export AS=${HOST}-as
+	export NM=${HOST}-nm
+	export STRIP=${HOST}-strip
+	export RANLIB=${HOST}-ranlib
+	export OBJDUMP=${HOST}-objdump
+	export READELF=${HOST}-readelf
+	export POPULATE=${HOST}-populate
+	export CFLAGS="-std=c11 -fPIC"
+	export CXXFLAGS="-std=gnu++17 -fPIC -frtti -fexceptions"
+	export CPPFLAGS="-I${STAGE}/include -I${STAGE}/usr/include"
+	export LDFLAGS="-L${STAGE}/lib -L${STAGE}/usr/lib"
+
+	echo "------- NOTES --------"
+	echo './configure --host=${HOST} --prefix=/usr --without-gtk --without-ncurses'
+	echo 'make && make DESTDIR=${STAGE} install'
+	echo 'cmake -DCMAKE_CROSSCOMPILING=ON -DCMAKE_SYSTEM_NAME="Linux" \
+		-DCMAKE_SYSTEM_PROCESSOR="aarch64" \
+		-DCMAKE_STAGING_PREFIX="${STAGE}" \
+		-DCMAKE_C_COMPILER="${TOOLCHAIN}/bin/${CC}" \
+		-DCMAKE_C_COMPILER_TARGET="${HOST}" \
+		-DCMAKE_CXX_COMPILER="${TOOLCHAIN}/bin/${CXX}" \
+		-DCMAKE_CXX_COMPILER_TARGET="${HOST}" \
+		-DCMAKE_BUILD_TYPE=Release ..'
+	echo "# stage to rootfs"
+	echo '${POPULATE} -s ${STAGE} -d ${ROOTFS}'
+	echo "------- NOTES --------"
 }
 
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -282,3 +296,4 @@ kcc() {
 	unset LDFLAGS
 	unset CPPFLAGS
 }
+
