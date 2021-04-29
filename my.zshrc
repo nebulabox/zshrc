@@ -22,6 +22,7 @@ setopt nobeep               # No beep
 setopt appendhistory        # Immediately append history instead of overwriting
 setopt histignorealldups    # If a new command is a duplicate, remove the older one
 setopt sharehistory         # Import new comands and appends typed commands to history
+setopt interactivecomments  #  allow comment on interactive command line
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=10000
