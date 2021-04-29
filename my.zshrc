@@ -1,7 +1,11 @@
 # If not running interactively, don't do anything
 # [[ $- != *i* ]] && return
 
-echo "Running my.zshrc"
+####################################  Common ENV ####################################
+script_file=${0:A}
+script_folder=${0:A:h}
+echo "Running ${script_file}"
+
 # prompt, use prompt -l for more themes
 autoload -Uz promptinit
 promptinit
@@ -61,6 +65,26 @@ elif [[ "$unamestr" == "CYGWIN_NT-10.0" ]]; then
 fi
 echo "platform is [$platform]"
 
+####################################  Plugins ####################################
+run_plugin() {
+	if [[ -f ${1} ]]; then
+		source ${1}
+		echo "${1:t} enabled"
+	else
+		echo "[Warning]NOT Found: ${1}"
+	fi
+}
+# https://github.com/zsh-users/zsh-autosuggestions
+run_plugin "${script_folder}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# https://github.com/zsh-users/zsh-syntax-highlighting
+run_plugin "${script_folder}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# https://github.com/zsh-users/zsh-history-substring-search
+run_plugin "${script_folder}/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+
+####################################  My Functions ####################################
 function ep {
 	if [[ $platform == 'linux' ]]; then
 		export http_proxy=http://127.0.0.1:65080;
@@ -117,7 +141,7 @@ zshrc_push() {
 }
 
 # usage: tarex <file>
-function tarex {
+tarex() {
     set -x;
 	if [ -f $1 ] ; then
 		case $1 in
@@ -141,11 +165,11 @@ function tarex {
 	set +x;
 }
 # # usage: tarxz <result.file> <input.files>
-function tarxz {
+tarxz() {
   tar pcvfJ $1 --exclude="$1" --exclude=".DS_Store" --exclude="._*" --exclude="thumbs.db" $*
 }
 
-function tarit {
+tarit() {
   tar pcvf $1 --exclude="$1" --exclude=".DS_Store" --exclude="._*" --exclude="thumbs.db" $*
 }
 
@@ -153,76 +177,6 @@ build_env_reset() {
     unset CFLAGS; unset CXXFLAGS; unset CPPFLAGS; unset LDFLAGS; unset CC; unset CXX; unset LD; unset AR; unset AS; unset NM; unset STRIP; unset RANLIB; unset OBJDUMP; unset READELF
 	export PATH="/usr/local/opt/file-formula/bin:/usr/local/opt/unzip/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/bzip2/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/ncurses/bin:/usr/local/opt/gnu-which/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/gettext/bin:/usr/local/opt/gnu-getopt/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin" 
 }
-
-cross_compile_ac86u() {
-	export TOOLCHAIN="/Volumes/USSD/aarch64-ac86u-linux-gnu"
-	export STAGE="/Volumes/USSD/ac86u/stage"
-	export ROOTFS="/Volumes/USSD/ac86u/rootfs"
-	export HOST="aarch64-ac86u-linux-gnu"
-	export GCC_VER="10.3.0"
-	export PATH="${TOOLCHAIN}/bin:${PATH}"
-	export CC=${HOST}-gcc
-	export CXX=${HOST}-g++
-	export LD=${HOST}-ld
-	export AR=${HOST}-ar
-	export AS=${HOST}-as
-	export NM=${HOST}-nm
-	export STRIP=${HOST}-strip
-	export RANLIB=${HOST}-ranlib
-	export OBJDUMP=${HOST}-objdump
-	export READELF=${HOST}-readelf
-	export POPULATE=${HOST}-populate
-	export CFLAGS="-std=c11 -fPIC"
-	export CXXFLAGS="-std=gnu++17 -fPIC -frtti -fexceptions"
-	export CPPFLAGS="-I${STAGE}/include -I${STAGE}/usr/include"
-	export LDFLAGS="-L${STAGE}/lib -L${STAGE}/usr/lib"
-
-	echo "------- NOTES --------"
-	echo './configure --host=${HOST} --prefix=/usr --without-gtk --without-ncurses'
-	echo 'make && make DESTDIR=${STAGE} install'
-	echo 'cmake -DCMAKE_CROSSCOMPILING=ON -DCMAKE_SYSTEM_NAME="Linux" \
-		-DCMAKE_SYSTEM_PROCESSOR="aarch64" \
-		-DCMAKE_STAGING_PREFIX="${STAGE}" \
-		-DCMAKE_C_COMPILER="${TOOLCHAIN}/bin/${CC}" \
-		-DCMAKE_C_COMPILER_TARGET="${HOST}" \
-		-DCMAKE_CXX_COMPILER="${TOOLCHAIN}/bin/${CXX}" \
-		-DCMAKE_CXX_COMPILER_TARGET="${HOST}" \
-		-DCMAKE_BUILD_TYPE=Release ..'
-	echo "# stage to rootfs"
-	echo '${POPULATE} -s ${STAGE} -d ${ROOTFS}'
-	echo "------- NOTES --------"
-}
-
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
-if [[ $platform == 'linux' ]]; then
-   alias sccd='cd /etc/systemd/system && ls'
-   alias sc='sudo systemctl daemon-reload && sudo systemctl'
-   alias ls='ls --color'
-   alias ll='ls --color -al'
-elif [[ $platform == 'macos' ]]; then
-  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-  alias ls='/bin/ls -G'
-  alias ll='/bin/ls -al -G'
-fi
-
-if { which vim > /dev/null } {
-	alias vi='vim'
-}
-
-alias df='df -h'    # human-readable sizes
-alias du='du -h'
-alias x86='arch -x86_64'
-alias pl="print -l"
-
-alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
-alias xiadan="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
-alias tdx="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
-alias killwine="/usr/bin/killall wine32on64-preloader"
 
 ff_cvt_smallest() {
 	ffmpeg -y -hide_banner -i $1 -profile:v main -sn -vcodec libx265 -crf 33 -acodec aac -b:a 64k -tag:v hvc1 -movflags +faststart ${1:r}.smallest.mp4
@@ -278,15 +232,6 @@ bin2hex() {
 	echo $i
 }
 
-alias aria2='aria2c -s16 -k1M -x16 -j16'
-alias youtube-dl-audio="youtube-dl -f 'bestaudio[ext=m4a]' "
-alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
-alias youtube-dl-listformats="youtube-dl -F "
-
-export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
-
-# more system environment vars set in ~/Library/LaunchAgents/environment.plist
-
 kcc() {
 	# alias k_debug="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1"
     # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
@@ -297,3 +242,41 @@ kcc() {
 	unset CPPFLAGS
 }
 
+
+
+####################################  Alias ####################################
+if [[ $platform == 'linux' ]]; then
+   alias sccd='cd /etc/systemd/system && ls'
+   alias sc='sudo systemctl daemon-reload && sudo systemctl'
+   alias ls='ls --color'
+   alias ll='ls --color -al'
+elif [[ $platform == 'macos' ]]; then
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+  alias ls='/bin/ls -G'
+  alias ll='/bin/ls -al -G'
+fi
+
+if { which vim > /dev/null } {
+	alias vi='vim'
+}
+
+alias df='df -h'    # human-readable sizes
+alias du='du -h'
+alias x86='arch -x86_64'
+alias pl="print -l"
+
+alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
+alias xiadan="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
+alias tdx="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/tdx/TdxW.exe > /dev/null 2&>/dev/null &"
+alias killwine="/usr/bin/killall wine32on64-preloader"
+
+
+alias aria2='aria2c -s16 -k1M -x16 -j16'
+alias youtube-dl-audio="youtube-dl -f 'bestaudio[ext=m4a]' "
+alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
+alias youtube-dl-listformats="youtube-dl -F "
+
+
+####################################  Others ####################################
+export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
+# more system environment vars set in ~/Library/LaunchAgents/environment.plist
