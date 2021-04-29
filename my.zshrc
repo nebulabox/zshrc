@@ -11,6 +11,9 @@ autoload -Uz promptinit
 promptinit
 prompt adam1
 
+# bind key to vi mode
+bindkey -v
+
 setopt extendedglob         # Extended globbing. Allows using regular expressions with *
 setopt nocaseglob           # Case insensitive globbing
 setopt rcexpandparam        # Array expansion with parameters
@@ -76,13 +79,20 @@ run_plugin() {
 }
 # https://github.com/zsh-users/zsh-autosuggestions
 run_plugin "${script_folder}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
 # https://github.com/zsh-users/zsh-syntax-highlighting
 run_plugin "${script_folder}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # https://github.com/zsh-users/zsh-history-substring-search
 run_plugin "${script_folder}/zsh-history-substring-search/zsh-history-substring-search.zsh"
-
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 ####################################  My Functions ####################################
 function ep {
