@@ -12,7 +12,7 @@ promptinit
 prompt adam1
 
 # bind key to vi mode
-bindkey -v
+# bindkey -v
 
 setopt extendedglob         # Extended globbing. Allows using regular expressions with *
 setopt nocaseglob           # Case insensitive globbing
@@ -265,6 +265,11 @@ elif [[ $platform == 'macos' ]]; then
   export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
   alias ls='/bin/ls -G'
   alias ll='/bin/ls -al -G'
+
+  export GOROOT_BOOTSTRAP=$HOME/go/go1.4
+  export GOROOT=$HOME/go/gosrc
+  export GOPATH=$HOME/go
+  export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 fi
 
 if { which vim > /dev/null } {
