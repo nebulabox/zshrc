@@ -267,9 +267,9 @@ elif [[ $platform == 'macos' ]]; then
   alias ll='/bin/ls -al -G'
 
   export GOROOT_BOOTSTRAP=$HOME/go/go1.4
-  export GOROOT=$HOME/go/gosrc
-  export GOPATH=$HOME/go
-  export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+  #export GOROOT=$HOME/go/gosrc
+  #export GOPATH=$HOME/go
+  export PATH="$HOME/go/bin:$HOME/go/gosrc/bin:$PATH"
 fi
 
 if { which vim > /dev/null } {
