@@ -243,6 +243,10 @@ bin2hex() {
 	echo $i
 }
 
+env_ac86u() {
+	. $HOME/kall/cross_libs/env_ac86u.zsh
+}
+
 kcc() {
 	# alias k_debug="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -g -DDEBUG=1"
     # alias k_release="c++ -std=gnu++2a -fPIC -frtti -fexceptions -fmodules -Ofast"
@@ -252,7 +256,6 @@ kcc() {
 	unset LDFLAGS
 	unset CPPFLAGS
 }
-
 
 
 ####################################  Alias ####################################
