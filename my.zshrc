@@ -97,13 +97,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ####################################  My Functions ####################################
 function ep {
-	if [[ $platform == 'linux' ]]; then
-		export http_proxy=http://127.0.0.1:65080;
-		export https_proxy=http://127.0.0.1:65080;
-	elif [[ $platform == 'macos' ]]; then
-		export http_proxy=http://127.0.0.1:1087;
-		export https_proxy=http://127.0.0.1:1087;
-	fi
+	export http_proxy=http://127.0.0.1:65080;
+	export https_proxy=http://127.0.0.1:65080;
 	echo "Enable Proxy: $http_proxy"
 }
 function dp {
