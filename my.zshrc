@@ -97,8 +97,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ####################################  My Functions ####################################
 function ep {
-	export http_proxy=http://127.0.0.1:65080;
-	export https_proxy=http://127.0.0.1:65080;
+	export http_proxy=http://127.0.0.1:54653;
+	export https_proxy=http://127.0.0.1:54653;
 	echo "Enable Proxy: $http_proxy"
 }
 function dp {
@@ -294,3 +294,5 @@ alias youtube-dl-listformats="youtube-dl -F "
 ####################################  Others ####################################
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 # more system environment vars set in ~/Library/LaunchAgents/environment.plist
+
+
