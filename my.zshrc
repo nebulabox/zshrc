@@ -252,6 +252,39 @@ kcc() {
 	unset CPPFLAGS
 }
 
+##### ssh-agent ######
+env=~/.ssh/agent.env
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+ssh_add_pk () {
+	passwd=$(<~/.keypasswd)
+	if [ ! $? -eq 0 ]; then
+		echo "=====>>>>> Need ~/.keypasswd for auto ssh_add"
+		return
+	fi
+	/usr/bin/expect <<-EOF
+	set time 30
+	spawn ssh-add
+	expect {
+	"*passphrase for*" { send "$passwd\r"; }
+	}
+	expect eof
+	EOF
+	ssh-add -l
+}
+agent_load_env
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start
+    ssh_add_pk
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh_add_pk
+fi
+unset env
+
 
 ####################################  Alias ####################################
 if [[ $platform == 'linux' ]]; then
