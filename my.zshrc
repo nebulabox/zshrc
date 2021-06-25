@@ -253,6 +253,7 @@ kcc() {
 }
 
 ##### ssh-agent ######
+mkdir -p ~/.ssh
 env=~/.ssh/agent.env
 agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
 agent_start () {
