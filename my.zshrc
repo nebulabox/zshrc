@@ -66,6 +66,8 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
   platform='macos'
 elif [[ "$unamestr" == "CYGWIN_NT-10.0" ]]; then
  platform='cygwin'
+elif [[ "$unamestr" =~ "MSYS_NT" ]]; then
+ platform='msys'
 fi
 echo "platform is [$platform]"
 
@@ -302,6 +304,8 @@ elif [[ $platform == 'macos' ]]; then
   #export GOROOT=$HOME/go/gosrc
   #export GOPATH=$HOME/go
   export PATH="$HOME/go/bin:$HOME/go/gosrc/bin:$PATH"
+elif [[ $platform == 'msys' ]]; then
+  export PATH="/c/Program Files/Microsoft VS Code/bin:$PATH"
 fi
 
 if { which vim > /dev/null } {
