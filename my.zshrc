@@ -316,6 +316,7 @@ alias df='df -h'    # human-readable sizes
 alias du='du -h'
 alias x86='arch -x86_64'
 alias pl="print -l"
+alias apt-update-all="sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y"
 
 alias wine="LC_ALL=zh_CN.GBK /usr/local/bin/wine"
 alias xiadan="LC_ALL=zh_CN.GBK /usr/bin/nohup /usr/local/bin/wine /Users/nebulabox/.wine/drive_c/htwt/xiadan.exe > /dev/null 2&>/dev/null &"
