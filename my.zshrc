@@ -99,8 +99,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ####################################  My Functions ####################################
 function ep {
-	export http_proxy=http://127.0.0.1:54653;
-	export https_proxy=http://127.0.0.1:54653;
+	export http_proxy=http://127.0.0.1:51088;
+	export https_proxy=http://127.0.0.1:51088;
 	echo "Enable Proxy: $http_proxy"
 }
 function dp {
