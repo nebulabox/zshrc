@@ -330,6 +330,8 @@ alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
 alias youtube-dl-listformats="youtube-dl -F "
 
 
+zshrc_pull
+
 ####################################  Others ####################################
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
 # more system environment vars set in ~/Library/LaunchAgents/environment.plist
