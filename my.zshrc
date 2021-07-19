@@ -140,12 +140,14 @@ zshrc_pull() {
 }
 
 zshrc_push() {
+	ep
 	pushd ~/zshrc 
 	git add .
 	git commit -m "no msg"
 	git pull origin
 	git push origin
 	popd
+	dp
 }
 
 # usage: tarex <file>
@@ -330,8 +332,8 @@ alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
 alias youtube-dl-listformats="youtube-dl -F "
 
 
-echo "run zshrc_pull on backgroud"
-zshrc_pull >/dev/null 2>/dev/null &
+echo "run zshrc_pull on sub shell"
+(zshrc_pull >/dev/null 2>/dev/null &)
 
 ####################################  Others ####################################
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
