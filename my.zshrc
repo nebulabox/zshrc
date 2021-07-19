@@ -331,7 +331,7 @@ alias youtube-dl-listformats="youtube-dl -F "
 
 
 echo "run zshrc_pull on backgroud"
-zshrc_pull &
+zshrc_pull >/dev/null 2>/dev/null &
 
 ####################################  Others ####################################
 export PATH=/Users/nebulabox/sync/bin:/Users/kliu/sync/bin:$PATH:/sbin
