@@ -291,6 +291,16 @@ fi
 unset env
 
 
+find_port() {
+	echo "sudo lsof -nP -iTCP:$1 | grep LISTEN"
+	sudo lsof -nP -iTCP:$1 | grep LISTEN
+}
+
+find_ports() {
+	echo "sudo lsof -i -P | grep LISTEN"
+	sudo lsof -i -P | grep LISTEN
+}
+
 ####################################  Alias ####################################
 if [[ $platform == 'linux' ]]; then
    alias sccd='cd /etc/systemd/system && ls'
