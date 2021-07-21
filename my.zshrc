@@ -324,6 +324,7 @@ if { which vim > /dev/null } {
 	alias vi='vim'
 }
 
+alias speedtest='wget -qO- --no-check-certificate https://raw.githubusercontent.com/oooldking/script/master/superbench.sh | bash'
 alias df='df -h'    # human-readable sizes
 alias du='du -h'
 alias x86='arch -x86_64'
