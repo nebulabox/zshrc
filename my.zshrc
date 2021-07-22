@@ -324,7 +324,7 @@ if { which vim > /dev/null } {
 	alias vi='vim'
 }
 
-alias speedtest='wget -N --no-check-certificate https://raw.githubusercontent.com/FunctionClub/ZBench/master/ZBench-CN.sh && bash ZBench-CN.sh'
+alias speedtest='wget -qO- --no-check-certificate https://raw.githubusercontent.com/oooldking/script/master/superbench.sh | bash'
 
 alias df='df -h'    # human-readable sizes
 alias du='du -h'
@@ -342,7 +342,7 @@ alias aria2='aria2c -s16 -k1M -x16 -j16'
 alias youtube-dl-audio="youtube-dl -f 'bestaudio[ext=m4a]' "
 alias youtube-dl-video="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' "
 alias youtube-dl-listformats="youtube-dl -F "
-
+alias tping='sudo tcpping -x 5 '
 
 echo "run zshrc_pull on sub shell"
 (zshrc_pull >/dev/null 2>/dev/null &)
